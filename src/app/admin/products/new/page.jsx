@@ -251,7 +251,7 @@ export default function NewProductPage() {
             <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">Sizes & Stock</h2>
-                <button type="button" onClick={addSize} className="text-pink-600 hover:underline">
+                <button type="button" onClick={addSize} className="text-yellow-400 hover:underline font-bold">
                   <FiPlus className="inline mr-1" /> Add Size
                 </button>
               </div>
@@ -295,7 +295,7 @@ export default function NewProductPage() {
             <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">Colors</h2>
-                <button type="button" onClick={addColor} className="text-pink-600 hover:underline">
+                <button type="button" onClick={addColor} className="text-yellow-400 hover:underline font-bold">
                   <FiPlus className="inline mr-1" /> Add Color
                 </button>
               </div>
@@ -352,7 +352,7 @@ export default function NewProductPage() {
                 ))}
               </div>
 
-              <label className="block border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-pink-500 transition">
+              <label className="block border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-yellow-400 transition">
                 <FiUpload className="mx-auto text-gray-400 mb-2" size={24} />
                 <span className="text-gray-500">
                   {uploading ? 'Uploading...' : 'Click to upload images'}
@@ -378,7 +378,7 @@ export default function NewProductPage() {
                   name="isActive"
                   checked={formData.isActive}
                   onChange={handleChange}
-                  className="rounded text-pink-600"
+                  className="rounded text-yellow-400"
                 />
                 <span className="ml-2">Active (visible on store)</span>
               </label>
@@ -389,7 +389,7 @@ export default function NewProductPage() {
                   name="featured"
                   checked={formData.featured}
                   onChange={handleChange}
-                  className="rounded text-pink-600"
+                  className="rounded text-yellow-400"
                 />
                 <span className="ml-2">Featured product</span>
               </label>

@@ -6,8 +6,8 @@ import Product from '@/models/Product';
 export async function GET(request, { params }) {
   try {
     await connectDB();
-
-    const product = await Product.findOne({ slug: params.slug, isActive: true });
+    const {slug}=await params;
+    const product = await Product.findOne({ slug, isActive: true });
 
     if (!product) {
       return NextResponse.json(

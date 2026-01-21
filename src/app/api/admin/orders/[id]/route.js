@@ -15,6 +15,9 @@ export async function PUT(request, { params }) {
 
     await connectDB();
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     const { orderStatus, trackingNumber } = await request.json();
 
     const updateData = { orderStatus };
@@ -26,7 +29,7 @@ export async function PUT(request, { params }) {
     }
 
     const order = await Order.findByIdAndUpdate(
-      params.id,
+      id,
       updateData,
       { new: true }
     );

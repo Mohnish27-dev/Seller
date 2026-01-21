@@ -17,7 +17,7 @@ export default function Providers({ children }) {
           },
           success: {
             iconTheme: {
-              primary: '#ec4899',
+              primary: '#FACC15',
               secondary: '#fff',
             },
           },

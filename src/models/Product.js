@@ -85,7 +85,7 @@ const productSchema = new mongoose.Schema({
 });
 
 // Create slug before saving
-productSchema.pre('save', function(next) {
+productSchema.pre('save', function() {
   if (this.isModified('name')) {
     this.slug = this.name
       .toLowerCase()
@@ -94,8 +94,9 @@ productSchema.pre('save', function(next) {
       .replace(/^-|-$/g, '');
   }
   // Calculate total stock
-  this.totalStock = this.sizes.reduce((acc, size) => acc + size.stock, 0);
-  next();
+  if (this.sizes && this.sizes.length > 0) {
+    this.totalStock = this.sizes.reduce((acc, size) => acc + (size.stock || 0), 0);
+  }
 });
 
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);

@@ -161,10 +161,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="flex items-center">
-              <input type="checkbox" required className="rounded text-pink-600" />
+              <input type="checkbox" required className="rounded text-yellow-400" />
               <span className="ml-2 text-sm text-gray-600">
                 I agree to the{' '}
-                <Link href="/terms" className="text-pink-600 hover:underline">
+                <Link href="/terms" className="text-yellow-400 hover:underline font-medium">
                   Terms & Conditions
                 </Link>
               </span>
@@ -181,7 +181,7 @@ export default function RegisterPage() {
 
           <p className="text-center mt-6 text-gray-600">
             Already have an account?{' '}
-            <Link href="/login" className="text-pink-600 font-medium hover:underline">
+            <Link href="/login" className="text-yellow-400 font-bold hover:underline">
               Login
             </Link>
           </p>

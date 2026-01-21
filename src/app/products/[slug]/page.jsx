@@ -1,14 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { FiHeart, FiShare2, FiMinus, FiPlus, FiTruck, FiShield } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import useCartStore from '@/store/cartStore';
+import useWishlistStore from '@/store/wishlistStore';
 import toast from 'react-hot-toast';
 
 export default function ProductDetailPage() {
+  const { data: session } = useSession();
   const params = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,10 +20,23 @@ export default function ProductDetailPage() {
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
+  
+  // Wishlist state
+  const { items: wishlistItems, toggleItem, fetchWishlist, initialized } = useWishlistStore();
+  
+  const isInWishlist = product && wishlistItems.some(
+    (item) => (item._id || item) === product._id
+  );
 
   useEffect(() => {
     fetchProduct();
   }, [params.slug]);
+
+  useEffect(() => {
+    if (session && !initialized) {
+      fetchWishlist();
+    }
+  }, [session, initialized, fetchWishlist]);
 
   const fetchProduct = async () => {
     try {
@@ -47,8 +63,30 @@ export default function ProductDetailPage() {
       toast.error('Please select a size');
       return;
     }
+    
+    // Check stock availability
+    const sizeInfo = product.sizes?.find(s => s.size === selectedSize);
+    if (!sizeInfo || sizeInfo.stock === 0) {
+      toast.error('This size is out of stock');
+      return;
+    }
+    
+    if (quantity > sizeInfo.stock) {
+      toast.error(`Only ${sizeInfo.stock} items available for this size`);
+      return;
+    }
+    
     addItem(product, quantity, selectedSize, selectedColor);
     toast.success('Added to cart!');
+  };
+
+  const handleToggleWishlist = async () => {
+    if (!session) {
+      toast.error('Please login to add to wishlist');
+      return;
+    }
+    if (!product) return;
+    await toggleItem(product._id);
   };
 
   const handleShare = () => {
@@ -119,7 +157,7 @@ export default function ProductDetailPage() {
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 ${
-                    selectedImage === index ? 'ring-2 ring-pink-600' : ''
+                    selectedImage === index ? 'ring-2 ring-yellow-400' : ''
                   }`}
                 >
                   <Image src={img.url} alt="" fill className="object-cover" />
@@ -131,7 +169,7 @@ export default function ProductDetailPage() {
 
         {/* Product Info */}
         <div className="lg:w-1/2">
-          <p className="text-sm text-pink-600 uppercase tracking-wide mb-2">
+          <p className="text-sm text-yellow-600 uppercase tracking-wide mb-2 font-bold">
             {product.category}
           </p>
           <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
@@ -140,7 +178,7 @@ export default function ProductDetailPage() {
           <div className="flex items-center space-x-4 mb-6">
             {product.discountPrice ? (
               <>
-                <span className="text-3xl font-bold text-pink-600">
+                <span className="text-3xl font-bold text-yellow-400">
                   ₹{product.discountPrice.toLocaleString()}
                 </span>
                 <span className="text-xl text-gray-400 line-through">
@@ -151,7 +189,7 @@ export default function ProductDetailPage() {
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-bold text-pink-600">
+              <span className="text-3xl font-bold text-yellow-400">
                 ₹{product.price.toLocaleString()}
               </span>
             )}
@@ -172,10 +210,10 @@ export default function ProductDetailPage() {
                     disabled={s.stock === 0}
                     className={`px-4 py-2 rounded-lg border transition ${
                       selectedSize === s.size
-                        ? 'bg-pink-600 text-white border-pink-600'
+                        ? 'bg-yellow-400 text-black border-yellow-400 font-bold'
                         : s.stock === 0
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'hover:border-pink-600'
+                        : 'hover:border-yellow-400'
                     }`}
                   >
                     {s.size}
@@ -197,7 +235,7 @@ export default function ProductDetailPage() {
                     onClick={() => setSelectedColor(c.name)}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-lg border transition ${
                       selectedColor === c.name
-                        ? 'border-pink-600 bg-pink-50'
+                        ? 'border-yellow-400 bg-yellow-50'
                         : 'hover:border-gray-400'
                     }`}
                   >
@@ -217,21 +255,49 @@ export default function ProductDetailPage() {
           {/* Quantity */}
           <div className="mb-6">
             <h3 className="font-semibold text-gray-800 mb-3">Quantity</h3>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-gray-100"
-              >
-                <FiMinus />
-              </button>
-              <span className="text-xl font-medium w-10 text-center">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-gray-100"
-              >
-                <FiPlus />
-              </button>
-            </div>
+            {(() => {
+              const sizeInfo = product.sizes?.find(s => s.size === selectedSize);
+              const availableStock = sizeInfo?.stock || 0;
+              const maxQuantity = Math.max(1, availableStock);
+              
+              return (
+                <>
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      disabled={quantity <= 1}
+                      className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <FiMinus />
+                    </button>
+                    <span className="text-xl font-medium w-10 text-center">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(Math.min(maxQuantity, quantity + 1))}
+                      disabled={quantity >= maxQuantity || availableStock === 0}
+                      className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <FiPlus />
+                    </button>
+                  </div>
+                  {/* Stock availability message */}
+                  {availableStock > 0 && availableStock <= 10 && (
+                    <p className="text-orange-500 text-sm mt-2 font-medium">
+                      ⚠️ Only {availableStock} left in stock for size {selectedSize}
+                    </p>
+                  )}
+                  {availableStock > 10 && (
+                    <p className="text-green-600 text-sm mt-2">
+                      ✓ {availableStock} in stock
+                    </p>
+                  )}
+                  {availableStock === 0 && (
+                    <p className="text-red-500 text-sm mt-2 font-medium">
+                      ❌ Out of stock for this size
+                    </p>
+                  )}
+                </>
+              );
+            })()}
           </div>
 
           {/* Actions */}
@@ -239,9 +305,14 @@ export default function ProductDetailPage() {
             <button onClick={handleAddToCart} className="btn-primary flex-1">
               Add to Cart
             </button>
-            <button className="btn-outline flex items-center justify-center space-x-2">
-              <FiHeart />
-              <span>Wishlist</span>
+            <button 
+              onClick={handleToggleWishlist}
+              className={`btn-outline flex items-center justify-center space-x-2 ${
+                isInWishlist ? 'bg-red-50 border-red-300 text-red-500' : ''
+              }`}
+            >
+              <FiHeart fill={isInWishlist ? 'currentColor' : 'none'} />
+              <span>{isInWishlist ? 'In Wishlist' : 'Wishlist'}</span>
             </button>
             <button
               onClick={handleShare}
@@ -253,7 +324,7 @@ export default function ProductDetailPage() {
 
           {/* WhatsApp Order */}
           <a
-            href={`https://wa.me/919999999999?text=Hi! I want to order: ${product.name} (${selectedSize}) - ₹${product.discountPrice || product.price}`}
+            href={`https://wa.me/+918317052176?text=Hi! I want to order: ${product.name} (${selectedSize}) - ₹${product.discountPrice || product.price}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center space-x-2 w-full py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition mb-6"
@@ -265,14 +336,14 @@ export default function ProductDetailPage() {
           {/* Features */}
           <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-xl">
             <div className="flex items-center space-x-3">
-              <FiTruck className="text-pink-600" size={24} />
+              <FiTruck className="text-yellow-400" size={24} />
               <div>
                 <p className="font-medium">Free Delivery</p>
                 <p className="text-sm text-gray-500">On orders above ₹999</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <FiShield className="text-pink-600" size={24} />
+              <FiShield className="text-yellow-400" size={24} />
               <div>
                 <p className="font-medium">Easy Returns</p>
                 <p className="text-sm text-gray-500">7 days return policy</p>

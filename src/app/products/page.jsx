@@ -76,7 +76,7 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-pink-100 to-purple-100 py-10">
+      <div className="bg-gradient-to-r from-yellow-100 to-amber-100 py-10">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-800">
             {selectedCategory 
@@ -103,7 +103,7 @@ export default function ProductsPage() {
                     onClick={() => setSelectedCategory(cat.slug)}
                     className={`w-full text-left px-3 py-2 rounded-lg transition ${
                       selectedCategory === cat.slug
-                        ? 'bg-pink-100 text-pink-600 font-medium'
+                        ? 'bg-yellow-100 text-yellow-600 font-bold'
                         : 'hover:bg-gray-100'
                     }`}
                   >
@@ -129,7 +129,7 @@ export default function ProductsPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 bg-white rounded-lg shadow border-none focus:ring-2 focus:ring-pink-500"
+                className="px-4 py-2 bg-white rounded-lg shadow border-none focus:ring-2 focus:ring-yellow-400"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -157,7 +157,7 @@ export default function ProductsPage() {
                 <p className="text-gray-500 text-lg">No products found</p>
                 <button
                   onClick={() => setSelectedCategory('')}
-                  className="mt-4 text-pink-600 hover:underline"
+                  className="mt-4 text-yellow-600 hover:underline font-semibold"
                 >
                   View all products
                 </button>
@@ -172,7 +172,7 @@ export default function ProductsPage() {
                     key={i}
                     className={`w-10 h-10 rounded-lg ${
                       pagination.page === i + 1
-                        ? 'bg-pink-600 text-white'
+                        ? 'bg-yellow-400 text-black font-bold'
                         : 'bg-white hover:bg-gray-100'
                     }`}
                   >
@@ -205,7 +205,7 @@ export default function ProductsPage() {
                   }}
                   className={`w-full text-left px-3 py-2 rounded-lg transition ${
                     selectedCategory === cat.slug
-                      ? 'bg-pink-100 text-pink-600 font-medium'
+                      ? 'bg-yellow-100 text-yellow-600 font-bold'
                       : 'hover:bg-gray-100'
                   }`}
                 >

@@ -55,7 +55,7 @@ export default function CartPage() {
                 <div className="flex-1 ml-4">
                   <Link
                     href={`/products/${item.slug}`}
-                    className="font-semibold text-gray-800 hover:text-pink-600"
+                    className="font-semibold text-gray-800 hover:text-yellow-400"
                   >
                     {item.name}
                   </Link>
@@ -84,7 +84,7 @@ export default function CartPage() {
                       </button>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-pink-600">
+                      <p className="font-bold text-yellow-400">
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </p>
                       {item.originalPrice !== item.price && (
@@ -143,7 +143,7 @@ export default function CartPage() {
               <div className="border-t pt-3">
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span className="text-pink-600">₹{total.toLocaleString()}</span>
+                  <span className="text-yellow-400 font-bold">₹{total.toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function CartPage() {
 
             <Link
               href="/products"
-              className="block text-center text-gray-600 hover:text-pink-600 mt-4"
+              className="block text-center text-gray-600 hover:text-yellow-400 mt-4 font-medium"
             >
               Continue Shopping
             </Link>

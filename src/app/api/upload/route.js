@@ -18,35 +18,60 @@ export async function POST(request) {
     }
 
     const formData = await request.formData();
+    
+    // Handle both single file and multiple files
     const file = formData.get('file');
-
-    if (!file) {
+    const files = formData.getAll('files');
+    
+    const filesToUpload = file ? [file] : files;
+    
+    if (!filesToUpload || filesToUpload.length === 0) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const uploadResults = [];
 
-    const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          folder: 'ladies-garments',
-          transformation: [
-            { width: 800, height: 1000, crop: 'limit' },
-            { quality: 'auto' },
-            { fetch_format: 'auto' }
-          ]
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      ).end(buffer);
-    });
+    for (const fileItem of filesToUpload) {
+      if (!fileItem || typeof fileItem === 'string') continue;
+      
+      const bytes = await fileItem.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          {
+            folder: 'ladies-garments',
+            transformation: [
+              { width: 800, height: 1000, crop: 'limit' },
+              { quality: 'auto' },
+              { fetch_format: 'auto' }
+            ]
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        ).end(buffer);
+      });
+
+      uploadResults.push({
+        url: result.secure_url,
+        publicId: result.public_id,
+      });
+    }
+
+    // Return both formats for compatibility
+    if (uploadResults.length === 1) {
+      return NextResponse.json({
+        url: uploadResults[0].url,
+        publicId: uploadResults[0].publicId,
+        urls: [uploadResults[0].url],
+      });
+    }
 
     return NextResponse.json({
-      url: result.secure_url,
-      publicId: result.public_id,
+      urls: uploadResults.map(r => r.url),
+      results: uploadResults,
     });
   } catch (error) {
     console.error('Upload error:', error);

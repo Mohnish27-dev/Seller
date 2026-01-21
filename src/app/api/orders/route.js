@@ -77,6 +77,24 @@ export async function POST(request) {
         );
       }
 
+      // Check stock availability for the specific size
+      const sizeInfo = product.sizes.find(s => s.size === item.size);
+      if (!sizeInfo) {
+        return NextResponse.json(
+          { error: `Size "${item.size}" not available for ${product.name}` },
+          { status: 400 }
+        );
+      }
+
+      if (sizeInfo.stock < item.quantity) {
+        return NextResponse.json(
+          { 
+            error: `Insufficient stock for "${product.name}" (Size: ${item.size}). Only ${sizeInfo.stock} available, but ${item.quantity} requested.` 
+          },
+          { status: 400 }
+        );
+      }
+
       orderItems.push({
         product: product._id,
         name: product.name,
@@ -106,6 +124,23 @@ export async function POST(request) {
       paymentStatus: paymentMethod === 'cod' ? 'pending' : 'pending',
       orderStatus: 'pending',
     });
+
+    // Deduct stock from products after order is created
+    for (const item of items) {
+      const product = await Product.findById(item.productId);
+      if (product) {
+        // Find the size and deduct stock
+        const sizeIndex = product.sizes.findIndex(s => s.size === item.size);
+        if (sizeIndex !== -1) {
+          product.sizes[sizeIndex].stock = Math.max(0, product.sizes[sizeIndex].stock - item.quantity);
+        }
+        // Recalculate total stock
+        product.totalStock = product.sizes.reduce((acc, s) => acc + (s.stock || 0), 0);
+        // Increment sold count
+        product.soldCount = (product.soldCount || 0) + item.quantity;
+        await product.save();
+      }
+    }
 
     return NextResponse.json(
       { message: 'Order created successfully', order },

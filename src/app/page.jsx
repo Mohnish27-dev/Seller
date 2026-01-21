@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiTruck, FiShield, FiRefreshCw, FiHeadphones } from 'react-icons/fi';
+import HeroSection from '@/components/HeroSection';
+import TrendyPairs from '@/components/TrendyPairs';
 
 const categories = [
   { name: 'Salwar', slug: 'salwar', image: 'https://picsum.photos/seed/salwar/400/500' },
@@ -22,41 +24,10 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-pink-100 via-purple-50 to-pink-100 py-20">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-                Elegant Fashion for
-                <span className="text-pink-600 block">Every Woman</span>
-              </h1>
-              <p className="text-lg text-gray-600 mb-8">
-                Discover our exclusive collection of beautiful salwar suits, 
-                kurtis, maxis, gowns and more. Premium quality at affordable prices.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Link href="/products" className="btn-primary">
-                  Shop Now
-                </Link>
-                <Link href="/products?featured=true" className="btn-outline">
-                  View Collection
-                </Link>
-              </div>
-            </div>
-            <div className="md:w-1/2 relative">
-              <div className="relative w-full h-[400px] md:h-[500px]">
-                <Image
-                  src="https://picsum.photos/seed/fashion/600/800"
-                  alt="Ladies Fashion"
-                  fill
-                  className="object-cover rounded-2xl shadow-2xl"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
+
+      {/* Trendy Pairs Section */}
+      <TrendyPairs />
 
       {/* Features */}
       <section className="py-12 bg-white border-b">
@@ -64,7 +35,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <div key={index} className="flex flex-col items-center text-center p-4">
-                <feature.icon className="text-pink-600 mb-3" size={32} />
+                <feature.icon className="text-yellow-400 mb-3" size={32} />
                 <h3 className="font-semibold text-gray-800">{feature.title}</h3>
                 <p className="text-sm text-gray-500">{feature.desc}</p>
               </div>
@@ -130,7 +101,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-pink-600 text-white">
+      <section className="py-16 bg-black text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
             Why Choose Us?
@@ -141,7 +112,7 @@ export default function Home() {
                 <span className="text-2xl">✨</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Premium Quality</h3>
-              <p className="text-pink-100">
+              <p className="text-gray-300">
                 We use only the finest fabrics and materials for long-lasting wear
               </p>
             </div>
@@ -150,7 +121,7 @@ export default function Home() {
                 <span className="text-2xl">💰</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Affordable Prices</h3>
-              <p className="text-pink-100">
+              <p className="text-gray-300">
                 Direct from manufacturer - no middleman means better prices for you
               </p>
             </div>
@@ -159,7 +130,7 @@ export default function Home() {
                 <span className="text-2xl">🚚</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Fast Delivery</h3>
-              <p className="text-pink-100">
+              <p className="text-gray-300">
                 Quick shipping across India with real-time tracking
               </p>
             </div>
@@ -191,7 +162,7 @@ export default function Home() {
 
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/8317052176?text=Hi! I'm interested in your products"
+        href="https://wa.me/+918317052176?text=Hi! I'm interested in your products"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50"

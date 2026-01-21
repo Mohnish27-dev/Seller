@@ -139,7 +139,7 @@ export default function CheckoutPage() {
         email: session?.user?.email,
       },
       theme: {
-        color: '#ec4899',
+        color: '#FACC15',
       },
     };
 
@@ -175,7 +175,7 @@ export default function CheckoutPage() {
   if (status === 'loading' || items.length === 0) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="animate-spin w-10 h-10 border-4 border-pink-600 border-t-transparent rounded-full" />
+        <div className="animate-spin w-10 h-10 border-4 border-yellow-400 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -290,7 +290,7 @@ export default function CheckoutPage() {
                       value="razorpay"
                       checked={paymentMethod === 'razorpay'}
                       onChange={(e) => setPaymentMethod(e.target.value)}
-                      className="text-pink-600"
+                      className="text-yellow-400"
                     />
                     <div className="ml-3">
                       <span className="font-medium">Pay Online</span>
@@ -314,7 +314,7 @@ export default function CheckoutPage() {
                       value="cod"
                       checked={paymentMethod === 'cod'}
                       onChange={(e) => setPaymentMethod(e.target.value)}
-                      className="text-pink-600"
+                      className="text-yellow-400"
                     />
                     <div className="ml-3">
                       <span className="font-medium">Cash on Delivery</span>
@@ -371,7 +371,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-lg font-bold border-t pt-3">
                     <span>Total</span>
-                    <span className="text-pink-600">₹{total.toLocaleString()}</span>
+                    <span className="text-yellow-400 font-bold">₹{total.toLocaleString()}</span>
                   </div>
                 </div>
 
