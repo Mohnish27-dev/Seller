@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import { FiFilter, FiX } from 'react-icons/fi';
@@ -23,7 +23,7 @@ const sortOptions = [
   { name: 'Most Popular', value: 'soldCount-desc' },
 ];
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -217,5 +217,29 @@ export default function ProductsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50">
+        <div className="bg-gradient-to-r from-yellow-100 to-amber-100 py-10">
+          <div className="container mx-auto px-4">
+            <div className="h-8 w-48 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 w-24 bg-gray-200 animate-pulse rounded mt-2"></div>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="bg-white rounded-xl aspect-[3/4] animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </div>
+    }>
+      <ProductsContent />
+    </Suspense>
   );
 }
