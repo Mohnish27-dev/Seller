@@ -13,7 +13,7 @@ export const sampleProducts = [
     featured: true,
     isActive: true,
     images: [
-      { url: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600", publicId: "" }
+      { url: "/products/p3.png", publicId: "" }
     ],
     sizes: [
       { size: "S", stock: 10 },
@@ -37,7 +37,7 @@ export const sampleProducts = [
     featured: true,
     isActive: true,
     images: [
-      { url: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600", publicId: "" }
+      { url: "/products/p2.png", publicId: "" }
     ],
     sizes: [
       { size: "S", stock: 5 },
@@ -61,7 +61,7 @@ export const sampleProducts = [
     featured: false,
     isActive: true,
     images: [
-      { url: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600", publicId: "" }
+      { url: "/products/p1.png", publicId: "" }
     ],
     sizes: [
       { size: "M", stock: 20 },
@@ -83,7 +83,7 @@ export const sampleProducts = [
     featured: true,
     isActive: true,
     images: [
-      { url: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600", publicId: "" }
+      { url: "/products/p5.png", publicId: "" }
     ],
     sizes: [
       { size: "S", stock: 3 },
@@ -106,7 +106,7 @@ export const sampleProducts = [
     featured: false,
     isActive: true,
     images: [
-      { url: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600", publicId: "" }
+      { url: "/products/p4.png", publicId: "" }
     ],
     sizes: [
       { size: "Free Size", stock: 25 }
@@ -127,7 +127,7 @@ export const sampleProducts = [
     featured: false,
     isActive: true,
     images: [
-      { url: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600", publicId: "" }
+      { url: "/products/p2.png", publicId: "" }
     ],
     sizes: [
       { size: "S", stock: 30 },

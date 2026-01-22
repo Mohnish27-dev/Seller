@@ -37,17 +37,17 @@ export default function HeroSection() {
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight animate-fadeInUp animation-delay-100">
-              DRESSES' TO
+              TRADITIONAL
               <br />
               <span className="relative inline-block">
-                BE NOTICE
+                ELEGANCE
                 <div className="absolute -bottom-2 left-0 w-full h-3 bg-yellow-400 opacity-30"></div>
               </span>
             </h1>
 
             {/* Tagline */}
             <p className="text-gray-600 text-lg mb-8 max-w-md animate-fadeInUp animation-delay-200">
-              Create Your Own Visual Style... Let It Be Unique For Yourself And Yet Identifiable For Others
+              Discover Our Exclusive Collection of Salwar Suits, Kurtis, Gowns & More. Premium Quality Ethnic Wear for Every Occasion.
             </p>
 
             {/* Color Selector */}
@@ -96,14 +96,14 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Add to Cart Button */}
+            {/* Shop Now Button */}
             <div className="animate-fadeInUp animation-delay-700">
               <Link
-                href="/cart"
+                href="/products"
                 className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               >
                 <FiShoppingCart className="text-xl" />
-                ADD TO CART
+                SHOP NOW
                 <FiArrowRight className="text-xl group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -118,24 +118,24 @@ export default function HeroSection() {
             <div className="relative z-10 animate-fadeInUp animation-delay-400">
               <div className="relative w-full h-[500px] md:h-[600px]">
                 <Image
-                  src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=800&h=1000&fit=crop"
-                  alt="Black Dress"
+                  src="/products/p1.png"
+                  alt="Traditional Ethnic Wear"
                   fill
                   className="object-contain animate-kenBurns"
                   priority
                 />
               </div>
 
-              {/* Floating Product Tag 1 - Black Dress */}
+              {/* Floating Product Tag 1 - Salwar Suit */}
               <div className="absolute top-[30%] left-8 bg-white px-4 py-2 rounded-lg shadow-lg animate-float animation-delay-800">
-                <p className="text-xs font-semibold text-gray-500 uppercase">Black Dress</p>
-                <p className="text-sm font-bold text-gray-900">₹8,999</p>
+                <p className="text-xs font-semibold text-gray-500 uppercase">Salwar Suit</p>
+                <p className="text-sm font-bold text-gray-900">₹2,499</p>
               </div>
 
-              {/* Floating Product Tag 2 - White Shoes */}
+              {/* Floating Product Tag 2 - Designer Kurti */}
               <div className="absolute bottom-[20%] right-8 bg-white px-4 py-2 rounded-lg shadow-lg animate-float animation-delay-1000">
-                <p className="text-xs font-semibold text-gray-500 uppercase">White Shoes</p>
-                <p className="text-sm font-bold text-gray-900">₹2,299</p>
+                <p className="text-xs font-semibold text-gray-500 uppercase">Designer Kurti</p>
+                <p className="text-sm font-bold text-gray-900">₹1,299</p>
               </div>
 
               {/* Navigation Dots */}

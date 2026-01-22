@@ -4,12 +4,48 @@ import Image from 'next/image';
 import { FiArrowRight } from 'react-icons/fi';
 
 const categories = [
-  { name: 'Foot Wear', href: '/products?category=footwear', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=300&fit=crop', icon: '👠' },
-  { name: 'Accessories', href: '/products?category=accessories', image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=400&h=300&fit=crop', icon: '👜' },
-  { name: 'Casual Wear', href: '/products?category=casual', image: 'https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=400&h=300&fit=crop', icon: '👕' },
-  { name: 'Night Wear', href: '/products?category=nightwear', image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=400&h=300&fit=crop', icon: '🌙' },
-  { name: 'Formal Wear', href: '/products?category=formal', image: 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=400&h=300&fit=crop', icon: '👗' },
-  { name: 'Sports Wear', href: '/products?category=sports', image: 'https://images.unsplash.com/photo-1483721310020-03333e577078?w=400&h=300&fit=crop', icon: '⚡' },
+  { 
+    name: 'Salwar', 
+    href: '/products?category=salwar', 
+    image: '/products/p1.png', 
+    icon: '👗',
+    description: 'Traditional & Trendy'
+  },
+  { 
+    name: 'Suit', 
+    href: '/products?category=suit', 
+    image: '/products/p2.png', 
+    icon: '✨',
+    description: 'Designer Collection'
+  },
+  { 
+    name: 'Kurti', 
+    href: '/products?category=kurti', 
+    image: '/products/p3.png', 
+    icon: '🌸',
+    description: 'Casual & Festive'
+  },
+  { 
+    name: 'Maxi', 
+    href: '/products?category=maxi', 
+    image: '/products/p4.png', 
+    icon: '🌺',
+    description: 'Elegant Styles'
+  },
+  { 
+    name: 'Gown', 
+    href: '/products?category=gown', 
+    image: '/products/p5.png', 
+    icon: '👸',
+    description: 'Party & Wedding'
+  },
+  { 
+    name: 'Dupatta', 
+    href: '/products?category=dupatta', 
+    image: '/products/p2.png', 
+    icon: '🧣',
+    description: 'Matching Pairs'
+  },
 ];
 
 export default function TrendyPairs() {
@@ -19,10 +55,10 @@ export default function TrendyPairs() {
         {/* Section Header */}
         <div className="text-center mb-12 animate-fadeInUp">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Trendy <span className="text-yellow-400">Pairs</span>
+            Shop by <span className="text-yellow-400">Category</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Discover our curated collections designed to complement your unique style
+            Explore our exclusive collection of premium ladies ethnic wear for every occasion
           </p>
         </div>
 
@@ -58,6 +94,11 @@ export default function TrendyPairs() {
                 <h3 className="text-lg font-bold mb-1 group-hover:text-yellow-400 transition-colors">
                   {category.name}
                 </h3>
+
+                {/* Description */}
+                <p className="text-xs text-gray-400 mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {category.description}
+                </p>
                 
                 {/* Arrow */}
                 <FiArrowRight className="text-yellow-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
@@ -75,7 +116,7 @@ export default function TrendyPairs() {
             href="/products"
             className="inline-flex items-center gap-2 bg-yellow-400 text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 transition-all duration-300 hover:scale-105 hover:shadow-xl group"
           >
-            Explore All Collections
+            Explore All Products
             <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
