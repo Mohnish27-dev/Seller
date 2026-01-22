@@ -25,6 +25,12 @@ export default function NewProductPage() {
     images: [],
     sizes: [{ size: 'Free Size', stock: 10 }],
     colors: [{ name: '', hexCode: '#000000' }],
+    returnPolicy: {
+      returnAllowed: true,
+      replacementAllowed: true,
+      returnWindow: 7,
+      conditions: 'Product must be unused with original tags intact',
+    },
   });
 
   const handleChange = (e) => {
@@ -366,6 +372,69 @@ export default function NewProductPage() {
                   disabled={uploading}
                 />
               </label>
+            </div>
+
+            {/* Return & Replacement Policy */}
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h2 className="text-lg font-semibold mb-4">Return & Replacement Policy</h2>
+              
+              <div className="space-y-4">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.returnPolicy.returnAllowed}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      returnPolicy: { ...formData.returnPolicy, returnAllowed: e.target.checked }
+                    })}
+                    className="rounded text-yellow-400"
+                  />
+                  <span className="ml-2">Return Allowed</span>
+                </label>
+
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.returnPolicy.replacementAllowed}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      returnPolicy: { ...formData.returnPolicy, replacementAllowed: e.target.checked }
+                    })}
+                    className="rounded text-yellow-400"
+                  />
+                  <span className="ml-2">Replacement Allowed</span>
+                </label>
+
+                <div>
+                  <label className="block text-gray-700 mb-2">Return Window</label>
+                  <select
+                    value={formData.returnPolicy.returnWindow}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      returnPolicy: { ...formData.returnPolicy, returnWindow: parseInt(e.target.value) }
+                    })}
+                    className="input-field"
+                  >
+                    <option value={7}>7 Days</option>
+                    <option value={10}>10 Days</option>
+                    <option value={15}>15 Days</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-2">Return Conditions</label>
+                  <textarea
+                    value={formData.returnPolicy.conditions}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      returnPolicy: { ...formData.returnPolicy, conditions: e.target.value }
+                    })}
+                    rows={2}
+                    className="input-field"
+                    placeholder="e.g., Product must be unused with tags intact"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Status */}

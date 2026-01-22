@@ -46,7 +46,7 @@ export default function Navbar() {
     }`}>
       {/* Top bar */}
       <div className="bg-black text-yellow-400 text-center py-2 text-sm font-medium animate-fadeInUp">
-        🎉 Free Shipping on orders above ₹999 | Use code <span className="font-bold">FIRST10</span> for 10% off
+        🎉 Free Shipping on orders above ₹999 
       </div>
 
       <nav className="container mx-auto px-4">

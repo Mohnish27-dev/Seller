@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { FiHeart, FiShare2, FiMinus, FiPlus, FiTruck, FiShield } from 'react-icons/fi';
+import { FiHeart, FiShare2, FiMinus, FiPlus, FiTruck, FiShield, FiRefreshCw, FiPhone } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import useCartStore from '@/store/cartStore';
 import useWishlistStore from '@/store/wishlistStore';
@@ -346,9 +346,85 @@ export default function ProductDetailPage() {
               <FiShield className="text-yellow-400" size={24} />
               <div>
                 <p className="font-medium">Easy Returns</p>
-                <p className="text-sm text-gray-500">7 days return policy</p>
+                <p className="text-sm text-gray-500">
+                  {product.returnPolicy?.returnAllowed 
+                    ? `${product.returnPolicy.returnWindow || 7} days return policy`
+                    : 'No returns on this item'
+                  }
+                </p>
               </div>
             </div>
+          </div>
+
+          {/* Return & Replacement Policy */}
+          <div className="mt-6 p-5 bg-yellow-50 border border-yellow-200 rounded-xl">
+            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <FiRefreshCw className="text-yellow-500" />
+              Return & Replacement Policy
+            </h3>
+            
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center gap-2">
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${product.returnPolicy?.returnAllowed ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                  {product.returnPolicy?.returnAllowed ? '✓' : '✕'}
+                </span>
+                <span className="text-gray-700">
+                  {product.returnPolicy?.returnAllowed 
+                    ? `Return allowed within ${product.returnPolicy.returnWindow || 7} days`
+                    : 'Returns not allowed for this product'
+                  }
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${product.returnPolicy?.replacementAllowed ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                  {product.returnPolicy?.replacementAllowed ? '✓' : '✕'}
+                </span>
+                <span className="text-gray-700">
+                  {product.returnPolicy?.replacementAllowed 
+                    ? 'Replacement available'
+                    : 'Replacement not available'
+                  }
+                </span>
+              </div>
+              
+              {product.returnPolicy?.conditions && (
+                <p className="text-gray-500 mt-2 pt-2 border-t border-yellow-200">
+                  <strong>Conditions:</strong> {product.returnPolicy.conditions}
+                </p>
+              )}
+            </div>
+            
+            {/* Contact Options for Return/Replacement Request */}
+            {(product.returnPolicy?.returnAllowed || product.returnPolicy?.replacementAllowed) && (
+              <div className="mt-4 pt-4 border-t border-yellow-200">
+                <p className="text-gray-700 font-medium mb-3">Request Return/Replacement via:</p>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={`https://wa.me/+918317052176?text=Hi! I want to request a return/replacement for: ${product.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition"
+                  >
+                    <FaWhatsapp size={16} />
+                    WhatsApp
+                  </a>
+                  <a
+                    href="mailto:inderkumarpamnani@gmail.com?subject=Return/Replacement Request"
+                    className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg text-sm hover:bg-gray-900 transition"
+                  >
+                    ✉️ Email
+                  </a>
+                  <a
+                    href="tel:+918317052176"
+                    className="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-black rounded-lg text-sm hover:bg-yellow-300 transition"
+                  >
+                    <FiPhone size={16} />
+                    Call
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Fabric Info */}

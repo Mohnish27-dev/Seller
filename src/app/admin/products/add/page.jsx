@@ -29,6 +29,12 @@ export default function AddProductPage() {
     images: [],
     sizes: [{ size: 'M', stock: 0 }],
     colors: [{ name: '', hexCode: '#000000' }],
+    returnPolicy: {
+      returnAllowed: true,
+      replacementAllowed: true,
+      returnWindow: 7,
+      conditions: 'Product must be unused with original tags intact',
+    },
   });
 
   const categories = ['salwar', 'suit', 'maxi', 'gown', 'legging', 'kurti', 'dupatta', 'other'];
@@ -413,6 +419,75 @@ export default function AddProductPage() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Return & Replacement Policy */}
+        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-white mb-4">Return & Replacement Policy</h2>
+          
+          <div className="space-y-4">
+            <label className="flex items-center space-x-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.returnPolicy.returnAllowed}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  returnPolicy: { ...formData.returnPolicy, returnAllowed: e.target.checked }
+                })}
+                className="w-5 h-5 rounded border-slate-600 text-cyan-500 focus:ring-cyan-500/20 bg-slate-700"
+              />
+              <div>
+                <span className="text-white font-medium">Return Allowed</span>
+                <p className="text-sm text-slate-400">Allow customers to return this product</p>
+              </div>
+            </label>
+
+            <label className="flex items-center space-x-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.returnPolicy.replacementAllowed}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  returnPolicy: { ...formData.returnPolicy, replacementAllowed: e.target.checked }
+                })}
+                className="w-5 h-5 rounded border-slate-600 text-cyan-500 focus:ring-cyan-500/20 bg-slate-700"
+              />
+              <div>
+                <span className="text-white font-medium">Replacement Allowed</span>
+                <p className="text-sm text-slate-400">Allow customers to request replacement</p>
+              </div>
+            </label>
+
+            <div>
+              <label className="block text-slate-300 font-medium mb-2">Return Window</label>
+              <select
+                value={formData.returnPolicy.returnWindow}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  returnPolicy: { ...formData.returnPolicy, returnWindow: parseInt(e.target.value) }
+                })}
+                className="w-full bg-slate-700/50 border border-slate-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 transition-all cursor-pointer"
+              >
+                <option value={7} className="bg-slate-800">7 Days</option>
+                <option value={10} className="bg-slate-800">10 Days</option>
+                <option value={15} className="bg-slate-800">15 Days</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-slate-300 font-medium mb-2">Return Conditions</label>
+              <textarea
+                value={formData.returnPolicy.conditions}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  returnPolicy: { ...formData.returnPolicy, conditions: e.target.value }
+                })}
+                rows={2}
+                className="w-full bg-slate-700/50 border border-slate-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 transition-all placeholder:text-slate-500 resize-none"
+                placeholder="e.g., Product must be unused with tags intact"
+              />
+            </div>
           </div>
         </div>
 

@@ -13,6 +13,7 @@ export default function CheckoutPage() {
   const { data: session, status } = useSession();
   const { items, getTotalPrice, clearCart } = useCartStore();
   const [loading, setLoading] = useState(false);
+  const [checkoutComplete, setCheckoutComplete] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
   const [address, setAddress] = useState({
     fullName: '',
@@ -33,10 +34,11 @@ export default function CheckoutPage() {
       toast.error('Please login to checkout');
       router.push('/login');
     }
-    if (items.length === 0 && status === 'authenticated') {
+    // Don't redirect to cart if checkout was completed successfully
+    if (items.length === 0 && status === 'authenticated' && !checkoutComplete) {
       router.push('/cart');
     }
-  }, [status, items, router]);
+  }, [status, items, router, checkoutComplete]);
 
   const handleAddressChange = (e) => {
     setAddress({ ...address, [e.target.name]: e.target.value });
@@ -123,9 +125,10 @@ export default function CheckoutPage() {
           });
 
           if (verifyRes.ok) {
+            setCheckoutComplete(true);
             clearCart();
             toast.success('Payment successful!');
-            router.push(`/orders/${order._id}?success=true`);
+            router.push(`/order-success/${order._id}`);
           } else {
             toast.error('Payment verification failed');
           }
@@ -161,9 +164,10 @@ export default function CheckoutPage() {
         await handleRazorpayPayment(order);
       } else {
         // COD order
+        setCheckoutComplete(true);
         clearCart();
         toast.success('Order placed successfully!');
-        router.push(`/orders/${order._id}?success=true`);
+        router.push(`/order-success/${order._id}`);
       }
     } catch (error) {
       toast.error(error.message);

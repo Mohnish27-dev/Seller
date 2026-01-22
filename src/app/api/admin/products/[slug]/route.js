@@ -22,7 +22,18 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ product });
+    // Ensure returnPolicy has default values for older products
+    const productData = product.toObject();
+    if (!productData.returnPolicy) {
+      productData.returnPolicy = {
+        returnAllowed: true,
+        replacementAllowed: true,
+        returnWindow: 7,
+        conditions: 'Product must be unused with original tags intact',
+      };
+    }
+
+    return NextResponse.json({ product: productData });
   } catch (error) {
     console.error('Error fetching product:', error);
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
@@ -62,6 +73,7 @@ export async function PUT(request, { params }) {
       images: body.images || product.images,
       sizes: body.sizes || product.sizes,
       colors: body.colors || product.colors,
+      returnPolicy: body.returnPolicy || product.returnPolicy,
     };
 
     // Recalculate total stock if sizes changed

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FiPhone, FiMail, FiMapPin, FiInstagram, FiFacebook, FiSend } from 'react-icons/fi';
+import { FiPhone, FiMail, FiInstagram, FiFacebook, FiSend } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Footer() {
@@ -51,7 +51,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-yellow-400 transition-smooth hover:scale-110 hover-glow-yellow">
                 <FiFacebook size={24} />
               </a>
-              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/+918317052176" target="_blank" rel="noopener noreferrer"
                 className="text-gray-400 hover:text-yellow-400 transition-smooth hover:scale-110 hover-glow-yellow">
                 <FaWhatsapp size={24} />
               </a>
@@ -63,10 +63,10 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-4 text-lg">Quick Links</h4>
             <ul className="space-y-2">
               <li><Link href="/products" className="hover:text-yellow-400 transition-smooth hover:translate-x-1 inline-block">All Products</Link></li>
+              <li><Link href="/about" className="hover:text-yellow-400 transition-smooth hover:translate-x-1 inline-block">About Us</Link></li>
               <li><Link href="/products?category=salwar" className="hover:text-yellow-400 transition-smooth hover:translate-x-1 inline-block">Salwar</Link></li>
               <li><Link href="/products?category=suit" className="hover:text-yellow-400 transition-smooth hover:translate-x-1 inline-block">Suits</Link></li>
               <li><Link href="/products?category=kurti" className="hover:text-yellow-400 transition-smooth hover:translate-x-1 inline-block">Kurti</Link></li>
-              <li><Link href="/products?category=gown" className="hover:text-yellow-400 transition-smooth hover:translate-x-1 inline-block">Gown</Link></li>
             </ul>
           </div>
 
@@ -88,15 +88,11 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
                 <FiPhone className="text-yellow-400" />
-                <span>+91 99999 99999</span>
+                <a href="tel:+918317052176" className="hover:text-yellow-400 transition-smooth">+91 8317052176</a>
               </li>
               <li className="flex items-center space-x-3">
                 <FiMail className="text-yellow-400" />
-                <span className="text-sm">support@ladiesgarments.com</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <FiMapPin className="text-yellow-400 mt-1" />
-                <span className="text-sm">123 Fashion Street,<br />New Delhi, India 110001</span>
+                <a href="mailto:inderkumarpamnani@gmail.com" className="text-sm hover:text-yellow-400 transition-smooth">inderkumarpamnani@gmail.com</a>
               </li>
             </ul>
           </div>

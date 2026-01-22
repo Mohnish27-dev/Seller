@@ -16,7 +16,18 @@ export async function GET(request, { params }) {
       );
     }
 
-    return NextResponse.json({ product });
+    // Ensure returnPolicy has default values for older products
+    const productData = product.toObject();
+    if (!productData.returnPolicy) {
+      productData.returnPolicy = {
+        returnAllowed: true,
+        replacementAllowed: true,
+        returnWindow: 7,
+        conditions: 'Product must be unused with original tags intact',
+      };
+    }
+
+    return NextResponse.json({ product: productData });
   } catch (error) {
     console.error('Get product error:', error);
     return NextResponse.json(

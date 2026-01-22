@@ -79,6 +79,7 @@ export async function POST(request) {
       images,
       sizes,
       colors,
+      returnPolicy,
     } = body;
 
     // Validate required fields
@@ -129,6 +130,12 @@ export async function POST(request) {
       sizes,
       colors: colors || [],
       totalStock,
+      returnPolicy: returnPolicy || {
+        returnAllowed: true,
+        replacementAllowed: true,
+        returnWindow: 7,
+        conditions: 'Product must be unused with original tags intact',
+      },
     });
 
     return NextResponse.json({ product, message: 'Product created successfully' });

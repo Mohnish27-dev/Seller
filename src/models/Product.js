@@ -78,6 +78,25 @@ const productSchema = new mongoose.Schema({
       default: 0,
     },
   },
+  returnPolicy: {
+    returnAllowed: {
+      type: Boolean,
+      default: true,
+    },
+    replacementAllowed: {
+      type: Boolean,
+      default: true,
+    },
+    returnWindow: {
+      type: Number,
+      enum: [7, 10, 15],
+      default: 7,
+    },
+    conditions: {
+      type: String,
+      default: 'Product must be unused with original tags intact',
+    },
+  },
   createdAt: {
     type: Date,
     default: Date.now,
