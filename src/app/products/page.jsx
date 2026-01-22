@@ -5,6 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import { FiFilter, FiX } from 'react-icons/fi';
 
+// Force dynamic rendering to prevent prerendering issues with useSearchParams
+export const dynamic = 'force-dynamic';
+
 const categories = [
   { name: 'All', slug: '' },
   { name: 'Salwar', slug: 'salwar' },
