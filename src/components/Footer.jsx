@@ -103,6 +103,11 @@ export default function Footer() {
           <p className="mt-2 text-gray-500">
             Made with <span className="text-yellow-400">❤️</span> for beautiful women
           </p>
+          <div className="mt-4">
+            <Link href="/admin/login" className="text-gray-600 hover:text-gray-400 text-xs transition-colors">
+              Admin Panel
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

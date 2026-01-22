@@ -127,6 +127,12 @@ export default function LoginPage() {
               Register
             </Link>
           </p>
+
+          <div className="mt-4 text-center">
+            <Link href="/admin/login" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+              Are you an Admin? Login here
+            </Link>
+          </div>
         </div>
       </div>
     </div>
