@@ -2,6 +2,10 @@
 
 A modern, full-featured e-commerce platform for women's ethnic and contemporary clothing built with Next.js 16, React 19, and MongoDB.
 
+## Live Demo
+
+https://seller-jade-six.vercel.app/
+
 ## Features
 
 ### Customer Features
